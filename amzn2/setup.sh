@@ -9,7 +9,7 @@
 
 set -x
 
-VIRTUALBOX_VERSION="5.2.18"
+VIRTUALBOX_VERSION="5.2.20"
 
 # The image doesn't have any resolvers specified
 

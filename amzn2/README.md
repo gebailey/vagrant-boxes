@@ -12,7 +12,7 @@ Amazon Linux 2 (this script was tested on a CentOS 7 installation).
 These scripts also shrink the consumed disk space, such that these box files
 are significantly smaller than others I've seen posted online.
 
-VirtualBox Guest Additions 5.2.18 are included in this box.
+VirtualBox Guest Additions 5.2.20 are included in this box.
 
 ### Limitations
 
