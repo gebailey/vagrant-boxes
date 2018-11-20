@@ -9,7 +9,7 @@
 
 set -x
 
-VIRTUALBOX_VERSION="5.2.20"
+VIRTUALBOX_VERSION="5.2.22"
 
 # The image doesn't have any resolvers specified
 
@@ -50,6 +50,16 @@ rm -f /root/VBoxGuestAdditions.iso
 # the Amazon Linux 2 virtual machine is booted.
 
 /etc/kernel/postinst.d/vboxadd ${KERNEL_VERSION}
+
+# Starting with VirtualBox 5.2.22, the above script starts a background process
+# and doesn't wait for completion, so wait for it to finish here before
+# proceeding.
+
+while pgrep -f '/sbin/rcvboxadd quicksetup' > /dev/null
+do
+    sleep 1
+done
+
 /sbin/depmod ${KERNEL_VERSION}
 
 # Clean up temporary files
