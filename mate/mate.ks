@@ -96,8 +96,8 @@ chvt 3
 
     ### Build VirtualBox Guest Additions for the new kernel
 
-    /etc/kernel/postinst.d/vboxadd 3.10.0-957.1.3.el7.x86_64
-    /sbin/depmod 3.10.0-957.1.3.el7.x86_64
+    /etc/kernel/postinst.d/vboxadd 3.10.0-957.5.1.el7.x86_64
+    /sbin/depmod 3.10.0-957.5.1.el7.x86_64
 
     ### Remove old kernel and kernel-devel RPMs
 
