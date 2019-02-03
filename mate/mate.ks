@@ -35,15 +35,7 @@ clearpart --all --initlabel
 @base
 @core
 @development
-dejavu-fonts-common
-dejavu-sans-fonts
-dejavu-sans-mono-fonts
-dejavu-serif-fonts
-iptables-services
 ntp
-ps_mem
-telnet
-xorg-x11-xauth
 
 %end
 
@@ -57,13 +49,12 @@ exec < /dev/tty3 > /dev/tty3
 chvt 3
 
 (
-    VIRTUALBOX_VERSION="5.2.16"
-
     ### Add extra repositories
 
     rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     rpm -ivh https://centos7.iuscommunity.org/ius-release.rpm
     rpm -ivh https://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+    rpm -ivh https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
     ### EPEL packages and package groups
 
@@ -92,6 +83,8 @@ chvt 3
 
     # Install the VirtualBox guest additions
 
+    VIRTUALBOX_VERSION="5.2.20"
+
     wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
     mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
     sh /mnt/VBoxLinuxAdditions.run
@@ -100,8 +93,8 @@ chvt 3
 
     ### Build VirtualBox Guest Additions for the new kernel
 
-    /etc/kernel/postinst.d/vboxadd 3.10.0-862.9.1.el7.x86_64
-    /sbin/depmod 3.10.0-862.9.1.el7.x86_64
+    /etc/kernel/postinst.d/vboxadd 3.10.0-862.14.4.el7.x86_64
+    /sbin/depmod 3.10.0-862.14.4.el7.x86_64
 
     ### Remove old kernel and kernel-devel RPMs
 
@@ -109,8 +102,9 @@ chvt 3
 
     ### Extra packages
 
-    yum -y install git-tools gnome-terminal fontconfig-infinality freetype-infinality
-    yum -y install deltarpm git-tools jq nmap-ncat screen tmux wemux
+    yum -y install dejavu-fonts-common dejavu-sans-fonts dejavu-sans-mono-fonts dejavu-serif-fonts
+    yum -y install evince fontconfig-infinality freetype-infinality gnome-terminal xorg-x11-fonts-misc xorg-x11-xauth
+    yum -y install deltarpm git-tools iptables-services jq nmap-ncat ps_mem screen stoken-cli telnet tmux wemux yapet
     yum -y install docker etcd
     yum -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
@@ -126,10 +120,25 @@ chvt 3
     # Python 3.6 (IUS)
     yum -y install python36u python36u-devel python36u-pip python36u-setuptools python36u-libs python36u-tools python36u-tkinter
 
-    wget -nv https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz
-    rm -f go1.10.3.linux-amd64.tar.gz
+    # Go 1.11.1
+    wget -nv https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.11.1.linux-amd64.tar.gz
+    rm -f go1.11.1.linux-amd64.tar.gz
     echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
+
+    # rclone
+    rpm -ivh https://downloads.rclone.org/rclone-current-linux-amd64.rpm
+
+    # restic 0.9.3
+    wget -nv https://github.com/restic/restic/releases/download/v0.9.3/restic_0.9.3_linux_amd64.bz2
+    bunzip2 restic_0.9.3_linux_amd64.bz2
+    mv restic_0.9.3_linux_amd64 /usr/local/bin/restic
+    chmod 755 /usr/local/bin/restic
+
+    # Google chrome
+    wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    yum -y install ./google-chrome-stable_current_x86_64.rpm
+    rm -f google-chrome-stable_current_x86_64.rpm
 
     ### Remove unnecessary packages
 
