@@ -1,48 +1,55 @@
-# Amazon Linux 2 vagrant box (virtualbox provider)
+# CentOS 7 Developer Workstation with MATE Desktop (virtualbox provider)
 
-Amazon Linux 2 vagrant box construction, using an Amazon supplied VDI disk
-image as a base.  This approach avoids actually booting the Amazon supplied
-VDI disk image by mounting it and applying vagrant related changes to it, and
-then calling vagrant to package the resulting image as a box file.  Available
-updates are applied, except the kernel, since we're not actually running on
-Amazon Linux 2 (this script was tested on a CentOS 7 installation).
+v7.5.20180812
 
-### Features
+CentOS 7 workstation with MATE desktop, VirtualBox 5.2.16 guest additions,
+development tools, Docker, Go 1.10.3, Java (OpenJDK), Python 3.5 (IUS repo),
+Python 3.6 (IUS repo), FreeType with infinality patches for improved font
+rendering (Nux repo), and CentOS updates as of August 12, 2018.
 
-These scripts also shrink the consumed disk space, such that these box files
-are significantly smaller than others I've seen posted online.
+### Building the mate box
 
-VirtualBox Guest Additions 6.0.2 are included in this box.
+Building the box file requires some manual preparation:
 
-### Limitations
+* The `mate.ks` kickstart file should be copied to webserver accessible by the
+  virtual machine
 
-Updates are applied, with the exception of the kernel.  The kernel may be
-upgraded by performing the following after booting the VM:
+* The URL specified in the `mate.ks` file should be modified to refer to the
+  webserver containing a copy of the CentOS DVD
 
-```bash
-yum upgrade
-```
-
-### How to use the amzn2 box
+### How to use the mate box
 
 The box file has been uploaded to the Hashicorp Vagrant Cloud.  The following
 shows an example usage of this box:
 
 ```bash
-$ vagrant init gbailey/amzn2
+$ vagrant init gbailey/mate
 A `Vagrantfile` has been placed in this directory. You are now
 ready to `vagrant up` your first virtual environment! Please read
 the comments in the Vagrantfile as well as documentation on
 `vagrantup.com` for more information on using Vagrant.
 ```
 
+To use the Mate desktop, modify the `Vagrantfile` to enable the VirtualBox
+graphical user interface:
+
+```
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = true
+
+    # Customize the amount of memory on the VM:
+    vb.memory = "2048"
+  end
+```
+
 ```bash
 $ vagrant up
 Bringing machine 'default' up with 'virtualbox' provider...
-==> default: Importing base box 'gbailey/amzn2'...
+==> default: Importing base box 'gbailey/mate'...
 ==> default: Matching MAC address for NAT networking...
-==> default: Checking if box 'gbailey/amzn2' is up to date...
-==> default: Setting the name of the VM: amzn2_default_1525380016562_9257
+==> default: Checking if box 'gbailey/mate' version '7.6.20190202' is up to date...
+==> default: Setting the name of the VM: mate_default_1549154320310_77928
 ==> default: Clearing any previously set network interfaces...
 ==> default: Preparing network interfaces based on configuration...
     default: Adapter 1: nat
@@ -63,19 +70,15 @@ Bringing machine 'default' up with 'virtualbox' provider...
 ==> default: Machine booted and ready!
 ==> default: Checking for guest additions in VM...
 ==> default: Mounting shared folders...
-    default: /vagrant => /home/gbailey/amzn2
+    default: /vagrant => /home/gbailey/mate
 ```
 
 ```bash
 $ vagrant ssh
-
-       __|  __|_  )
-       _|  (     /   Amazon Linux 2 AMI
-      ___|\___|___|
-
-https://aws.amazon.com/amazon-linux-2/
-No packages needed for security; 3 packages available
-Run "sudo yum update" to apply all updates.
+[vagrant@matevm ~]$ cat /etc/system-release
+CentOS Linux release 7.6.1810 (Core) 
+[vagrant@matevm ~]$ uname -a
+Linux matevm 3.10.0-957.5.1.el7.x86_64 #1 SMP Fri Feb 1 14:54:57 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 ### Copyright
