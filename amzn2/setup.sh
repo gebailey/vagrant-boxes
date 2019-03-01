@@ -30,13 +30,15 @@ chmod 440 /etc/sudoers.d/vagrant
 
 # Apply any available Amazon Linux 2 updates
 
-yum -y upgrade --exclude='kernel*'
+yum -y upgrade
 
 # Install the VirtualBox guest additions
 
-KERNEL_VERSION=$(ls /lib/modules)
+yum -y install gcc elfutils-libelf-devel kernel-devel
 
-yum -y install gcc elfutils-libelf-devel kernel-devel-${KERNEL_VERSION}
+package-cleanup -y --oldkernels --count=1
+
+KERNEL_VERSION=$(ls /lib/modules)
 
 wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
 mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
@@ -50,15 +52,6 @@ rm -f /root/VBoxGuestAdditions.iso
 # the Amazon Linux 2 virtual machine is booted.
 
 /etc/kernel/postinst.d/vboxadd ${KERNEL_VERSION}
-
-# Starting with VirtualBox 5.2.22, the above script starts a background process
-# and doesn't wait for completion, so wait for it to finish here before
-# proceeding.
-
-while pgrep -f '/sbin/rcvboxadd quicksetup' > /dev/null
-do
-    sleep 1
-done
 
 /sbin/depmod ${KERNEL_VERSION}
 

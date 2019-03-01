@@ -4,8 +4,7 @@ Amazon Linux 2 vagrant box construction, using an Amazon supplied VDI disk
 image as a base.  This approach avoids actually booting the Amazon supplied
 VDI disk image by mounting it and applying vagrant related changes to it, and
 then calling vagrant to package the resulting image as a box file.  Available
-updates are applied, except the kernel, since we're not actually running on
-Amazon Linux 2 (this script was tested on a CentOS 7 installation).
+updates are applied as part of this process.
 
 ### Features
 
@@ -13,15 +12,6 @@ These scripts also shrink the consumed disk space, such that these box files
 are significantly smaller than others I've seen posted online.
 
 VirtualBox Guest Additions 6.0.4 are included in this box.
-
-### Limitations
-
-Updates are applied, with the exception of the kernel.  The kernel may be
-upgraded by performing the following after booting the VM:
-
-```bash
-yum upgrade
-```
 
 ### How to use the amzn2 box
 
