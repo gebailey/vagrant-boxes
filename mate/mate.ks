@@ -84,8 +84,13 @@ chvt 3
     echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
     chmod 440 /etc/sudoers.d/vagrant
 
+    ### Remove current kernel and kernel-devel RPMs
+
+    rpm -e kernel-$(uname -r) kernel-devel-$(uname -r)
+
     # Install the VirtualBox guest additions
 
+    KERNEL_VERSION=$(ls /lib/modules)
     VIRTUALBOX_VERSION="6.0.4"
 
     wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
@@ -96,12 +101,8 @@ chvt 3
 
     ### Build VirtualBox Guest Additions for the new kernel
 
-    /etc/kernel/postinst.d/vboxadd 3.10.0-957.5.1.el7.x86_64
-    /sbin/depmod 3.10.0-957.5.1.el7.x86_64
-
-    ### Remove old kernel and kernel-devel RPMs
-
-    rpm -e kernel-3.10.0-957.el7.x86_64 kernel-devel-3.10.0-957.el7.x86_64
+    /etc/kernel/postinst.d/vboxadd ${KERNEL_VERSION}
+    /sbin/depmod ${KERNEL_VERSION}
 
     ### Extra packages
 
@@ -129,21 +130,21 @@ chvt 3
     chown -R root.root /var/www/html/python-3.6.8-docs-html
     ln -s /var/www/html/python-3.6.8-docs-html /var/www/html/python3
 
-    # Go 1.11.5
-    wget -nv https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.11.5.linux-amd64.tar.gz
-    rm -f go1.11.5.linux-amd64.tar.gz
-    echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
-
     # Java (OpenJDK)
     yum -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
+    # Go 1.12.1
+    wget -nv https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.12.1.linux-amd64.tar.gz
+    rm -f go1.12.1.linux-amd64.tar.gz
+    echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
+
     # Node.js
     yum -y install nodejs nodejs-devel nodejs-docs
-    rpm -ivh https://dl.yarnpkg.com/rpm/yarn-1.13.0-1.noarch.rpm
-    ln -s /usr/share/doc/nodejs-docs-10.15.1/html /var/www/html/nodejs
+    ln -s /usr/share/doc/nodejs-docs-10.15.3/html /var/www/html/nodejs
+    rpm -ivh https://dl.yarnpkg.com/rpm/yarn-1.15.2-1.noarch.rpm
 
-    # Rust 1.31.0
+    # Rust
     yum -y install rust rust-doc
     ln -s /usr/share/doc/rust/html /var/www/html/rust
 
