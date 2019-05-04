@@ -11,7 +11,7 @@ updates are applied as part of this process.
 These scripts also shrink the consumed disk space, such that these box files
 are significantly smaller than others I've seen posted online.
 
-VirtualBox Guest Additions 6.0.4 are included in this box.
+VirtualBox Guest Additions 6.0.6 are included in this box.
 
 ### How to use the amzn2 box
 
