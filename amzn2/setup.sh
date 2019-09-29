@@ -9,8 +9,6 @@
 
 set -x
 
-VIRTUALBOX_VERSION="6.0.12"
-
 # The image doesn't have any resolvers specified
 
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
@@ -39,6 +37,8 @@ yum -y install gcc elfutils-libelf-devel kernel-devel
 package-cleanup -y --oldkernels --count=1
 
 KERNEL_VERSION=$(ls /lib/modules)
+
+VIRTUALBOX_VERSION=$(wget -q http://download.virtualbox.org/virtualbox/LATEST.TXT -O -)
 
 wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
 mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
