@@ -58,6 +58,17 @@ chvt 3
     rpm -ivh https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
     rpm -ivh https://rpm.nodesource.com/pub_12.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
 
+    # mate 1.20
+    # https://github.com/gebailey/mate-rpms/blob/master/1.20/el7/README.md#using-pre-built-mate-120-rpms
+cat > /etc/yum.repos.d/mate-1.20-el7.repo <<EOF
+[mate-1.20-el7]
+name=MATE 1.20 RPMs for EL7
+baseurl=http://repos.lxpro.com/mate/1.20/el7
+enabled=1
+gpgcheck=1
+gpgkey=https://lxpro.com/RPM-GPG-KEY-repos.lxpro.com
+EOF
+
     ### EPEL packages and package groups
 
     echo; echo "EPEL packages and package groups"
@@ -93,11 +104,7 @@ chvt 3
     KERNEL_VERSION=$(ls /lib/modules)
     VIRTUALBOX_VERSION=$(curl -s http://download.virtualbox.org/virtualbox/LATEST.TXT)
 
-    # wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
-
-    # https://www.virtualbox.org/ticket/18917
-    # Use test VirtualBox build of guest additions, because 6.0.12 doesn't build on RHEL 7.7 kernels
-    wget -nv https://www.virtualbox.org/download/testcase/VBoxGuestAdditions_6.0.13-133316.iso -O /root/VBoxGuestAdditions.iso
+    wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
 
     mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
     sh /mnt/VBoxLinuxAdditions.run
@@ -135,15 +142,15 @@ chvt 3
     # Java (OpenJDK)
     yum -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
-    # Go 1.13
-    wget -nv https://dl.google.com/go/go1.13.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
-    rm -f go1.13.linux-amd64.tar.gz
+    # Go 1.13.3
+    wget -nv https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.13.3.linux-amd64.tar.gz
+    rm -f go1.13.3.linux-amd64.tar.gz
     echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
 
     # Node.js
     yum -y install nodejs nodejs-devel nodejs-docs
-    ln -s /usr/share/doc/nodejs-docs-12.10.0/html /var/www/html/nodejs
+    ln -s /usr/share/doc/nodejs-docs-12.13.0/html /var/www/html/nodejs
     wget -nv https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
     yum -y install yarn
 
@@ -157,11 +164,11 @@ chvt 3
     mv restic_0.9.5_linux_amd64 /usr/local/bin/restic
     chmod 755 /usr/local/bin/restic
 
-    # aws-nuke 2.11.0
-    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.11.0/aws-nuke-v2.11.0-linux-amd64.tar.gz
-    tar xf aws-nuke-v2.11.0-linux-amd64.tar.gz
-    mv dist/aws-nuke-v2.11.0-linux-amd64 /usr/local/bin/aws-nuke
-    rm -rf aws-nuke-v2.11.0-linux-amd64.tar.gz dist
+    # aws-nuke 2.12.0
+    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.12.0/aws-nuke-v2.12.0-linux-amd64.tar.gz
+    tar xf aws-nuke-v2.12.0-linux-amd64.tar.gz
+    mv dist/aws-nuke-v2.12.0-linux-amd64 /usr/local/bin/aws-nuke
+    rm -rf aws-nuke-v2.12.0-linux-amd64.tar.gz dist
 
     # Google chrome
     wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
@@ -191,6 +198,8 @@ yum install -y kubectl
     yum -y remove '*-firmware'
 
     ### Cleanup yum
+
+    rm -f /etc/yum.repos.d/mate-1.20-el7.repo
 
     yum clean all
     rm -rf /var/cache/yum/*

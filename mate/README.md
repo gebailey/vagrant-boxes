@@ -1,12 +1,12 @@
 # CentOS 7 Developer Workstation with MATE Desktop
 
-v7.6.20190202
+v7.7.20191026
 
-CentOS 7 workstation with MATE desktop, VirtualBox 6.0.4 guest additions,
-development tools, Google chrome, Firefox, Thunderbird, Docker, Go 1.11.5, Java
-(OpenJDK), Python 3.5 (IUS repo), Python 3.6 (IUS repo), Node.js 10.15.1, Rust
-1.31.0, freetype-freeworld installed for improved font rendering (Nux repo),
-and CentOS updates as of February 2, 2019.
+CentOS 7 workstation with MATE 1.20 desktop, VirtualBox 6.0.14 guest additions,
+development tools, Google chrome, Firefox, Thunderbird, Docker, Go 1.13.3, Java
+(OpenJDK), Python 3.6, Node.js 12.13.0, Rust 1.38.0, freetype-freeworld
+installed for improved font rendering (Nux repo), kubectl, minikube, and CentOS
+updates as of October 26, 2019.
 
 ### Building the mate box
 
