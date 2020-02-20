@@ -68,7 +68,7 @@ https://aws.amazon.com/amazon-linux-2/
 
 ### Copyright
 
-Copyright (C) 2019, Greg Bailey <gbailey@lxpro.com>
+Copyright (C) 2020, Greg Bailey <gbailey@lxpro.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
