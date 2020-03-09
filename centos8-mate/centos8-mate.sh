@@ -55,9 +55,9 @@ vboxmanage storageattach mate --storagectl IDE --port 1 --device 0 --type dvddri
 
 vboxmanage modifyhd mate.vdi --compact
 
-vagrant package --base mate --output mate-$(date +%Y%m%d).box
+vagrant package --base mate --output centos8-mate-$(date +%Y%m%d).box
 
-vboxmanage export mate -o mate-$(date +%Y%m%d).ova --vsys 0 --product mate --version $(date +%Y%m%d) --description "CentOS 8 Developer Workstation with MATE Desktop"
+vboxmanage export mate -o centos8-mate-$(date +%Y%m%d).ova --vsys 0 --product centos8-mate --version $(date +%Y%m%d) --description "CentOS 8 Developer Workstation with MATE Desktop"
 
 vboxmanage unregistervm mate --delete
 

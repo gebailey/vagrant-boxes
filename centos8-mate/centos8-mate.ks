@@ -26,6 +26,9 @@ zerombr
 %end
 
 %packages
+@base
+@development
+elfutils-libelf-devel
 %end
 
 %post
@@ -34,20 +37,61 @@ exec < /dev/tty3 > /dev/tty3
 chvt 3
 
 (
+    ### Set up sudo for vagrant user
     echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
     chmod 440 /etc/sudoers.d/vagrant
 
-    ### Cleanup yum
+    ### Install the VirtualBox guest additions
+    VIRTUALBOX_VERSION=$(curl -s http://download.virtualbox.org/virtualbox/LATEST.TXT)
+    wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
+    mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
+    sh /mnt/VBoxLinuxAdditions.run
+    umount /mnt
+    rm -f /root/VBoxGuestAdditions.iso
+    KERNEL_VERSION=$(ls /lib/modules)
+    /etc/kernel/postinst.d/vboxadd ${KERNEL_VERSION}
+    /sbin/depmod ${KERNEL_VERSION}
 
-    yum clean all
-    rm -rf /var/cache/yum/*
+    ### Add extra repositories
+    dnf -y install epel-release
+
+    ### Upgrade to current packages
+    echo; echo "Upgrade to current packages"
+    dnf -y upgrade
+
+    ### Python 3.6
+    dnf -y install python3 python3-devel
+
+    ### Extra packages
+    dnf -y install git-tools jq mailx ps_mem rclone screen telnet tmux yapet
+
+    ### Remove unnecessary packages
+    dnf -y remove '*-firmware'
+
+    ### Cleanup dnf
+    dnf clean all
+    rm -rf /var/cache/dnf/*
 
     ### Clean up network configuration
-
     > /etc/resolv.conf
-
     sed -i '/^HWADDR=.*$/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3
     sed -i '/^UUID=.*$/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3
+
+    ### Zero out swap partition
+    echo; echo "Zero fill swap partition"
+    swapoff -a
+    cat /dev/zero > /dev/mapper/cl_matevm-swap
+    mkswap /dev/mapper/cl_matevm-swap
+
+    ### Zero out /boot filesystem
+    echo; echo "Zero fill /boot filesystem"
+    for i in `seq 10`; do sync; cat /dev/zero > /boot/zerofill$i; sleep 1; done
+    rm -f /boot/zerofill*
+
+    ### Zero out / filesystem
+    echo; echo "Zero fill / filesystem"
+    for i in `seq 10`; do sync; cat /dev/zero > /zerofill$i; sleep 1; done
+    rm -f /zerofill*
 
 ) 2>&1 | tee /root/ks-post.log
 
