@@ -48,7 +48,8 @@ chvt 3
     sh /mnt/VBoxLinuxAdditions.run
     umount /mnt
     rm -f /root/VBoxGuestAdditions.iso
-    KERNEL_VERSION=$(ls /lib/modules)
+
+    KERNEL_VERSION=$(rpm -q kernel --qf %{VERSION}-%{RELEASE}.%{ARCH})
     /etc/kernel/postinst.d/vboxadd ${KERNEL_VERSION}
     /sbin/depmod ${KERNEL_VERSION}
 
@@ -59,11 +60,20 @@ chvt 3
     echo; echo "Upgrade to current packages"
     dnf -y upgrade
 
-    ### Python 3.6
-    dnf -y install python3 python3-devel
+    ### Package Groups
+    dnf -y group install fedora-packager fonts
+
+    ### Mate desktop
+    dnf -y copr enable stenstorp/MATE
+    dnf -y copr enable stenstorp/lightdm
+    dnf config-manager --set-enabled PowerTools
+
+    dnf -y install NetworkManager-adsl NetworkManager-bluetooth NetworkManager-libreswan-gnome NetworkManager-openvpn-gnome NetworkManager-ovs NetworkManager-ppp NetworkManager-team NetworkManager-wifi NetworkManager-wwan abrt-desktop abrt-java-connector adwaita-gtk2-theme alsa-plugins-pulseaudio atril atril-caja atril-thumbnailer caja caja-actions caja-image-converter caja-open-terminal caja-sendto caja-wallpaper caja-xattr-tags dconf-editor engrampa eom firewall-config gnome-disk-utility gnome-epub-thumbnailer gstreamer1-plugins-ugly-free gtk2-engines gucharmap gvfs-afc gvfs-afp gvfs-archive gvfs-fuse gvfs-gphoto2 gvfs-mtp gvfs-smb initial-setup-gui libmatekbd libmatemixer libmateweather libsecret lm_sensors marco mate-applets mate-backgrounds mate-calc mate-control-center mate-desktop mate-dictionary mate-disk-usage-analyzer mate-icon-theme mate-media mate-menus mate-menus-preferences-category-menu mate-notification-daemon mate-panel mate-polkit mate-power-manager mate-screensaver mate-screenshot mate-search-tool mate-session-manager mate-settings-daemon mate-system-log mate-system-monitor mate-terminal mate-themes mate-user-admin mate-user-guide mozo network-manager-applet nm-connection-editor p7zip p7zip-plugins pluma seahorse seahorse-caja xdg-user-dirs-gtk
+
+    dnf -y install lightdm slick-greeter slick-greeter-mate
 
     ### Extra packages
-    dnf -y install git-tools jq mailx ps_mem rclone screen telnet tmux yapet
+    dnf -y install firefox git-tools jq mailx ps_mem python3 python3-devel rclone screen telnet thunderbird tmux yapet
 
     ### Remove unnecessary packages
     dnf -y remove '*-firmware'
@@ -71,6 +81,9 @@ chvt 3
     ### Cleanup dnf
     dnf clean all
     rm -rf /var/cache/dnf/*
+
+    ### Default to GUI session
+    systemctl set-default graphical.target
 
     ### Clean up network configuration
     > /etc/resolv.conf
