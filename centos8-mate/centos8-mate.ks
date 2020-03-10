@@ -43,6 +43,10 @@ chvt 3
 
     ### Install the VirtualBox guest additions
     VIRTUALBOX_VERSION=$(curl -s http://download.virtualbox.org/virtualbox/LATEST.TXT)
+
+    # https://www.virtualbox.org/ticket/19336
+    VIRTUALBOX_VERSION="6.1.2"
+
     wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
     mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
     sh /mnt/VBoxLinuxAdditions.run
@@ -61,7 +65,10 @@ chvt 3
     dnf -y upgrade
 
     ### Package Groups
-    dnf -y group install fedora-packager fonts
+    dnf -y group install fedora-packager
+
+    ### Fonts
+    dnf -y install dejavu-fonts-common dejavu-sans-fonts dejavu-sans-mono-fonts dejavu-serif-fonts
 
     ### Mate desktop
     dnf -y copr enable stenstorp/MATE
@@ -73,7 +80,63 @@ chvt 3
     dnf -y install lightdm slick-greeter slick-greeter-mate
 
     ### Extra packages
-    dnf -y install firefox git-tools jq mailx ps_mem python3 python3-devel rclone screen telnet thunderbird tmux yapet
+    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mod_ssl ps_mem rclone screen stoken-cli telnet thunderbird tmux xterm yapet
+
+    ### Python
+    dnf -y install python3 python3-devel
+    wget -nv https://docs.python.org/3.6/archives/python-3.6.8-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.6.8-docs-html.tar.bz2
+    rm -f python-3.6.8-docs-html.tar.bz2
+    chown -R root.root /var/www/html/python-3.6.8-docs-html
+    ln -s /var/www/html/python-3.6.8-docs-html /var/www/html/python
+
+    ### Java (OpenJDK)
+    dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
+
+    ### Go 1.14
+    wget -nv https://dl.google.com/go/go1.14.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.14.linux-amd64.tar.gz
+    rm -f go1.14.linux-amd64.tar.gz
+    echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
+
+    ### Rust
+    dnf -y install rust rust-doc
+    ln -s /usr/share/doc/rust/html /var/www/html/rust
+
+    ### restic 0.9.6
+    wget -nv https://github.com/restic/restic/releases/download/v0.9.6/restic_0.9.6_linux_amd64.bz2
+    bunzip2 restic_0.9.6_linux_amd64.bz2
+    mv restic_0.9.6_linux_amd64 /usr/local/bin/restic
+    chmod 755 /usr/local/bin/restic
+
+    ### aws-nuke 2.14.0
+    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.14.0/aws-nuke-v2.14.0-linux-amd64.tar.gz
+    tar xf aws-nuke-v2.14.0-linux-amd64.tar.gz
+    mv dist/aws-nuke-v2.14.0-linux-amd64 /usr/local/bin/aws-nuke
+    rm -rf aws-nuke-v2.14.0-linux-amd64.tar.gz dist
+
+    ### Google chrome
+    wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    dnf -y install ./google-chrome-stable_current_x86_64.rpm
+    rm -f google-chrome-stable_current_x86_64.rpm
+
+    ### minikube
+    ### https://kubernetes.io/docs/tasks/tools/install-minikube/
+    wget -nv https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -O /usr/local/bin/minikube
+    chmod 755 /usr/local/bin/minikube
+
+    ### kubectl
+    ### https://kubernetes.io/docs/tasks/tools/install-kubectl/
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+dnf install -y kubectl
 
     ### Remove unnecessary packages
     dnf -y remove '*-firmware'
