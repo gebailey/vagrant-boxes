@@ -139,26 +139,19 @@ chvt 3
     dnf config-manager --disable docker-ce-stable
     mkdir -p /etc/docker
     echo '{"bip":"192.168.180.1/22", "fixed-cidr":"192.168.180.0/22"}' > /etc/docker/daemon.json
-    curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-    chmod +x /usr/local/bin/docker-compose
+    wget -nv https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
+    chmod 755 /usr/local/bin/docker-compose
+
+    ### kubectl
+    ### https://kubernetes.io/docs/tasks/tools/install-kubectl/
+    KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+    wget -nv https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl
+    chmod 755 /usr/local/bin/kubectl
 
     ### minikube
     ### https://kubernetes.io/docs/tasks/tools/install-minikube/
     wget -nv https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -O /usr/local/bin/minikube
     chmod 755 /usr/local/bin/minikube
-
-    ### kubectl
-    ### https://kubernetes.io/docs/tasks/tools/install-kubectl/
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-EOF
-dnf install -y kubectl
 
     ### Remove unnecessary packages
     dnf -y remove '*-firmware'
