@@ -80,15 +80,19 @@ chvt 3
     dnf -y install lightdm slick-greeter slick-greeter-mate
 
     ### Extra packages
-    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mod_ssl ps_mem rclone screen stoken-cli telnet thunderbird tmux xterm yapet
+    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mariadb-server mod_ssl ps_mem rclone screen sqlite stoken-cli telnet thunderbird tmux xterm yapet
 
     ### Python
     dnf -y install python3 python3-devel
+
     wget -nv https://docs.python.org/3.6/archives/python-3.6.8-docs-html.tar.bz2
     tar -C /var/www/html -xjf python-3.6.8-docs-html.tar.bz2
     rm -f python-3.6.8-docs-html.tar.bz2
     chown -R root.root /var/www/html/python-3.6.8-docs-html
     ln -s /var/www/html/python-3.6.8-docs-html /var/www/html/python
+
+    dnf -y install python3-django python3-django-doc
+    ln -s /usr/share/doc/python3-django-doc /var/www/html/django
 
     ### Java (OpenJDK)
     dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
@@ -119,6 +123,15 @@ chvt 3
     wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
     dnf -y install ./google-chrome-stable_current_x86_64.rpm
     rm -f google-chrome-stable_current_x86_64.rpm
+
+    ### Docker CE
+    ### https://www.linuxtechi.com/install-docker-ce-centos-8-rhel-8/
+    dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+    dnf install docker-ce --nobest -y
+    dnf config-manager --disable docker-ce-stable
+    echo '{"bip":"192.168.180.1/22", "fixed-cidr":"192.168.180.0/22"}' > /etc/docker/daemon.json
+    curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
 
     ### minikube
     ### https://kubernetes.io/docs/tasks/tools/install-minikube/
