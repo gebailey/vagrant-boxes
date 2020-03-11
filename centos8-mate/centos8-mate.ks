@@ -107,6 +107,11 @@ chvt 3
     dnf -y install rust rust-doc
     ln -s /usr/share/doc/rust/html /var/www/html/rust
 
+    ### Visual Studio Code
+    rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
+    dnf -y install code
+
     ### restic 0.9.6
     wget -nv https://github.com/restic/restic/releases/download/v0.9.6/restic_0.9.6_linux_amd64.bz2
     bunzip2 restic_0.9.6_linux_amd64.bz2
@@ -129,6 +134,7 @@ chvt 3
     dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
     dnf install docker-ce --nobest -y
     dnf config-manager --disable docker-ce-stable
+    mkdir -p /etc/docker
     echo '{"bip":"192.168.180.1/22", "fixed-cidr":"192.168.180.0/22"}' > /etc/docker/daemon.json
     curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
