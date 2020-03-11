@@ -94,6 +94,9 @@ chvt 3
     dnf -y install python3-django python3-django-doc
     ln -s /usr/share/doc/python3-django-doc /var/www/html/django
 
+    ### Perl
+    dnf -y module install perl:5.26
+
     ### Java (OpenJDK)
     dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
