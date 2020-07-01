@@ -1,11 +1,11 @@
 # CentOS 8 Developer Workstation with MATE Desktop
 
-v8.1.20200311
+v8.2.20200701
 
-CentOS 8 workstation with MATE 1.22 desktop, VirtualBox 6.1.4 guest additions,
+CentOS 8 workstation with MATE 1.22 desktop, VirtualBox 6.1.10 guest additions,
 development tools, Visual Studio Code, Google chrome, Firefox, Thunderbird,
-Docker CE, Go 1.14, Java (OpenJDK), Python 3.6, Rust 1.39.0, MariaDB Server,
-kubectl, minikube, and CentOS updates as of March 11, 2020.
+Docker CE, Go 1.14.4, Java (OpenJDK), Python 3.6, Python 3.8, Rust 1.41.1,
+MariaDB Server, kubectl, minikube, and CentOS updates as of July 1, 2020.
 
 ### Building the centos8-mate box
 
@@ -48,14 +48,14 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: Box Version: >= 0
 ==> default: Loading metadata for box 'gbailey/centos8-mate'
     default: URL: https://vagrantcloud.com/gbailey/centos8-mate
-==> default: Adding box 'gbailey/centos8-mate' (v8.1.20200311) for provider: virtualbox
-    default: Downloading: https://vagrantcloud.com/gbailey/boxes/centos8-mate/versions/8.1.20200311/providers/virtualbox.box
+==> default: Adding box 'gbailey/centos8-mate' (v8.2.20200701) for provider: virtualbox
+    default: Downloading: https://vagrantcloud.com/gbailey/boxes/centos8-mate/versions/8.2.20200701/providers/virtualbox.box
     default: Download redirected to host: vagrantcloud-files-production.s3.amazonaws.com
     default: Calculating and comparing box checksum...
-==> default: Successfully added box 'gbailey/centos8-mate' (v8.1.20200311) for 'virtualbox'!
+==> default: Successfully added box 'gbailey/centos8-mate' (v8.2.20200701) for 'virtualbox'!
 ==> default: Importing base box 'gbailey/centos8-mate'...
 ==> default: Matching MAC address for NAT networking...
-==> default: Checking if box 'gbailey/centos8-mate' version '8.1.20200311' is up to date...
+==> default: Checking if box 'gbailey/centos8-mate' version '8.2.20200701' is up to date...
 ==> default: Setting the name of the VM: centos8-mate_default_1584201131910_53407
 ==> default: Clearing any previously set network interfaces...
 ==> default: Preparing network interfaces based on configuration...
@@ -86,9 +86,9 @@ $ vagrant ssh
 Activate the web console with: systemctl enable --now cockpit.socket
 
 [vagrant@matevm ~]$ cat /etc/system-release
-CentOS Linux release 8.1.1911 (Core) 
+CentOS Linux release 8.2.2004 (Core) 
 [vagrant@matevm ~]$ uname -a
-Linux matevm 4.18.0-147.5.1.el8_1.x86_64 #1 SMP Wed Feb 5 02:00:39 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+Linux matevm 4.18.0-193.6.3.el8_2.x86_64 #1 SMP Wed Jun 10 11:09:32 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 ### Copyright

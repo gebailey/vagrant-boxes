@@ -21,7 +21,7 @@ vboxmanage storagectl mate --name SATA --add sata --portcount 1
 
 vboxmanage createhd --filename "mate.vdi" --size 24576
 
-vboxmanage storageattach mate --storagectl IDE --port 1 --device 0 --type dvddrive --medium /iso/CentOS-8.1.1911-x86_64-boot.iso
+vboxmanage storageattach mate --storagectl IDE --port 1 --device 0 --type dvddrive --medium /iso/CentOS-8.2.2004-x86_64-boot.iso
 vboxmanage storageattach mate --storagectl SATA --port 0 --device 0 --type hdd --medium mate.vdi
 
 vboxmanage startvm mate

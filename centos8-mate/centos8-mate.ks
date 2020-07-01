@@ -43,10 +43,6 @@ chvt 3
 
     ### Install the VirtualBox guest additions
     VIRTUALBOX_VERSION=$(curl -s http://download.virtualbox.org/virtualbox/LATEST.TXT)
-
-    # https://www.virtualbox.org/ticket/19336
-    VIRTUALBOX_VERSION="6.1.2"
-
     wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
     mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
     sh /mnt/VBoxLinuxAdditions.run
@@ -80,17 +76,27 @@ chvt 3
     dnf -y install lightdm slick-greeter slick-greeter-mate
 
     ### Extra packages
-    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mariadb-server mod_ssl ps_mem rclone screen sqlite stoken-cli telnet thunderbird tmux xterm yapet
+    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mariadb-server mod_ssl ps_mem rclone screen sqlite stoken-cli telnet thunderbird tmux whois xterm yapet
 
-    ### Python
+    ### Python 3.6
     dnf -y install python3 python3-devel
 
     wget -nv https://docs.python.org/3.6/archives/python-3.6.8-docs-html.tar.bz2
     tar -C /var/www/html -xjf python-3.6.8-docs-html.tar.bz2
     rm -f python-3.6.8-docs-html.tar.bz2
     chown -R root.root /var/www/html/python-3.6.8-docs-html
-    ln -s /var/www/html/python-3.6.8-docs-html /var/www/html/python
+    ln -s /var/www/html/python-3.6.8-docs-html /var/www/html/python36
 
+    ### Python 3.8
+    dnf -y install python38 python38-devel
+
+    wget -nv https://docs.python.org/3.8/archives/python-3.8.0-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.8.0-docs-html.tar.bz2
+    rm -f python-3.8.0-docs-html.tar.bz2
+    chown -R root.root /var/www/html/python-3.8.0-docs-html
+    ln -s /var/www/html/python-3.8.0-docs-html /var/www/html/python38
+
+    ### Django
     dnf -y install python3-django python3-django-doc
     ln -s /usr/share/doc/python3-django-doc /var/www/html/django
 
@@ -100,10 +106,10 @@ chvt 3
     ### Java (OpenJDK)
     dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
-    ### Go 1.14
-    wget -nv https://dl.google.com/go/go1.14.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.14.linux-amd64.tar.gz
-    rm -f go1.14.linux-amd64.tar.gz
+    ### Go 1.14.4
+    wget -nv https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.14.4.linux-amd64.tar.gz
+    rm -f go1.14.4.linux-amd64.tar.gz
     echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
 
     ### Rust
@@ -121,11 +127,11 @@ chvt 3
     mv restic_0.9.6_linux_amd64 /usr/local/bin/restic
     chmod 755 /usr/local/bin/restic
 
-    ### aws-nuke 2.14.0
-    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.14.0/aws-nuke-v2.14.0-linux-amd64.tar.gz
-    tar xf aws-nuke-v2.14.0-linux-amd64.tar.gz
-    mv dist/aws-nuke-v2.14.0-linux-amd64 /usr/local/bin/aws-nuke
-    rm -rf aws-nuke-v2.14.0-linux-amd64.tar.gz dist
+    ### aws-nuke 2.15.0-beta.1
+    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.15.0-beta.1/aws-nuke-v2.15.0.beta.1-linux-amd64.tar.gz
+    tar xf aws-nuke-v2.15.0.beta.1-linux-amd64.tar.gz
+    mv dist/aws-nuke-v2.15.0.beta.1-linux-amd64 /usr/local/bin/aws-nuke
+    rm -rf aws-nuke-v2.15.0.beta.1-linux-amd64.tar.gz dist
 
     ### Google chrome
     wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
