@@ -17,7 +17,8 @@ AMZN2_RAW="$(mktemp -d -t amzn2_raw_XXXXXXXX)"
 AMZN2_MNT="$(mktemp -d -t amzn2_mnt_XXXXXXXX)"
 AMZN2_VDI="$(mktemp -d -t amzn2_vdi_XXXXXXXX)"
 
-qemu-img convert ${AMZN2_SRC} ${AMZN2_RAW}/amzn2.raw
+vboxmanage clonemedium ${AMZN2_SRC} ${AMZN2_RAW}/amzn2.raw --format RAW
+vboxmanage closemedium ${AMZN2_RAW}/amzn2.raw
 
 # Mount the raw image and prepare to chroot into it
 
