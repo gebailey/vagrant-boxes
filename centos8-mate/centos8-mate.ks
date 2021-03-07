@@ -67,16 +67,17 @@ chvt 3
     dnf -y install dejavu-fonts-common dejavu-sans-fonts dejavu-sans-mono-fonts dejavu-serif-fonts
 
     ### Mate desktop
+    ### https://copr.fedorainfracloud.org/coprs/stenstorp/MATE/
     dnf -y copr enable stenstorp/MATE
     dnf -y copr enable stenstorp/lightdm
-    dnf config-manager --set-enabled PowerTools
+    dnf config-manager --set-enabled powertools
 
-    dnf -y install NetworkManager-adsl NetworkManager-bluetooth NetworkManager-libreswan-gnome NetworkManager-openvpn-gnome NetworkManager-ovs NetworkManager-ppp NetworkManager-team NetworkManager-wifi NetworkManager-wwan abrt-desktop abrt-java-connector adwaita-gtk2-theme alsa-plugins-pulseaudio atril atril-caja atril-thumbnailer caja caja-actions caja-image-converter caja-open-terminal caja-sendto caja-wallpaper caja-xattr-tags dconf-editor engrampa eom firewall-config gnome-disk-utility gnome-epub-thumbnailer gstreamer1-plugins-ugly-free gtk2-engines gucharmap gvfs-afc gvfs-afp gvfs-archive gvfs-fuse gvfs-gphoto2 gvfs-mtp gvfs-smb initial-setup-gui libmatekbd libmatemixer libmateweather libsecret lm_sensors marco mate-applets mate-backgrounds mate-calc mate-control-center mate-desktop mate-dictionary mate-disk-usage-analyzer mate-icon-theme mate-media mate-menus mate-menus-preferences-category-menu mate-notification-daemon mate-panel mate-polkit mate-power-manager mate-screensaver mate-screenshot mate-search-tool mate-session-manager mate-settings-daemon mate-system-log mate-system-monitor mate-terminal mate-themes mate-user-admin mate-user-guide mozo network-manager-applet nm-connection-editor p7zip p7zip-plugins pluma seahorse seahorse-caja xdg-user-dirs-gtk
+    dnf -y install NetworkManager-adsl NetworkManager-bluetooth NetworkManager-libreswan-gnome NetworkManager-openvpn-gnome NetworkManager-ovs NetworkManager-ppp NetworkManager-team NetworkManager-wifi NetworkManager-wwan abrt-desktop abrt-java-connector adwaita-gtk2-theme alsa-plugins-pulseaudio atril atril-caja atril-thumbnailer caja caja-actions caja-image-converter caja-open-terminal caja-sendto caja-wallpaper caja-xattr-tags dconf-editor engrampa eom firewall-config gnome-disk-utility gnome-epub-thumbnailer gstreamer1-plugins-ugly-free gtk2-engines gucharmap gvfs-afc gvfs-afp gvfs-archive gvfs-fuse gvfs-gphoto2 gvfs-mtp gvfs-smb initial-setup-gui libmatekbd libmatemixer libmateweather libsecret lm_sensors marco mate-applets mate-backgrounds mate-calc mate-control-center mate-desktop mate-dictionary mate-disk-usage-analyzer mate-icon-theme mate-media mate-menus mate-menus-preferences-category-menu mate-notification-daemon mate-panel mate-polkit mate-power-manager mate-screensaver mate-screenshot mate-search-tool mate-session-manager mate-settings-daemon mate-system-log mate-system-monitor mate-terminal mate-themes mate-user-admin mate-user-guide mozo network-manager-applet nm-connection-editor p7zip p7zip-plugins pluma seahorse seahorse-caja xdg-user-dirs-gtk brisk-menu
 
     dnf -y install lightdm slick-greeter slick-greeter-mate
 
     ### Extra packages
-    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mariadb-server mod_ssl ps_mem rclone screen sqlite stoken-cli telnet thunderbird tmux whois xterm yapet
+    dnf -y install evince firefox ghostscript git-tools httpd jq mailx mariadb-server mod_ssl ps_mem rclone screen sqlite telnet thunderbird tmux whois xterm yapet
 
     ### Python 3.6
     dnf -y install python3 python3-devel
@@ -90,15 +91,15 @@ chvt 3
     ### Python 3.8
     dnf -y install python38 python38-devel
 
-    wget -nv https://docs.python.org/3.8/archives/python-3.8.0-docs-html.tar.bz2
-    tar -C /var/www/html -xjf python-3.8.0-docs-html.tar.bz2
-    rm -f python-3.8.0-docs-html.tar.bz2
-    chown -R root.root /var/www/html/python-3.8.0-docs-html
-    ln -s /var/www/html/python-3.8.0-docs-html /var/www/html/python38
+    wget -nv https://docs.python.org/3.8/archives/python-3.8.3-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.8.3-docs-html.tar.bz2
+    rm -f python-3.8.3-docs-html.tar.bz2
+    chown -R root.root /var/www/html/python-3.8.3-docs-html
+    ln -s /var/www/html/python-3.8.3-docs-html /var/www/html/python38
 
     ### Django
-    dnf -y install python3-django python3-django-doc
-    ln -s /usr/share/doc/python3-django-doc /var/www/html/django
+    dnf -y install python3-django3 python3-django3-doc
+    ln -s /usr/share/doc/python3-django3-doc /var/www/html/django
 
     ### Perl
     dnf -y module install perl:5.26
@@ -106,10 +107,10 @@ chvt 3
     ### Java (OpenJDK)
     dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
-    ### Go 1.14.4
-    wget -nv https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.14.4.linux-amd64.tar.gz
-    rm -f go1.14.4.linux-amd64.tar.gz
+    ### Go 1.16
+    wget -nv https://golang.org/dl/go1.16.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
+    rm -f go1.16.linux-amd64.tar.gz
     echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
 
     ### Rust
@@ -121,17 +122,18 @@ chvt 3
     echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
     dnf -y install code
 
-    ### restic 0.9.6
-    wget -nv https://github.com/restic/restic/releases/download/v0.9.6/restic_0.9.6_linux_amd64.bz2
-    bunzip2 restic_0.9.6_linux_amd64.bz2
-    mv restic_0.9.6_linux_amd64 /usr/local/bin/restic
+    ### restic 0.12.0
+    wget -nv https://github.com/restic/restic/releases/download/v0.12.0/restic_0.12.0_linux_amd64.bz2
+    bunzip2 restic_0.12.0_linux_amd64.bz2
+    mv restic_0.12.0_linux_amd64 /usr/local/bin/restic
     chmod 755 /usr/local/bin/restic
 
-    ### aws-nuke 2.15.0-beta.1
-    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.15.0-beta.1/aws-nuke-v2.15.0.beta.1-linux-amd64.tar.gz
-    tar xf aws-nuke-v2.15.0.beta.1-linux-amd64.tar.gz
-    mv dist/aws-nuke-v2.15.0.beta.1-linux-amd64 /usr/local/bin/aws-nuke
-    rm -rf aws-nuke-v2.15.0.beta.1-linux-amd64.tar.gz dist
+    ### aws-nuke 2.15.0-rc.3
+    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.15.0-rc.3/aws-nuke-v2.15.0.rc.3-linux-amd64.tar.gz
+    tar xf aws-nuke-v2.15.0.rc.3-linux-amd64.tar.gz
+    mv aws-nuke-v2.15.0.rc.3-linux-amd64 /usr/local/bin/aws-nuke
+    rm -rf aws-nuke-v2.15.0.rc.3-linux-amd64.tar.gz
+    chown -R root.root /usr/local/bin/aws-nuke
 
     ### Google chrome
     wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
@@ -139,13 +141,12 @@ chvt 3
     rm -f google-chrome-stable_current_x86_64.rpm
 
     ### Docker CE
-    ### https://www.linuxtechi.com/install-docker-ce-centos-8-rhel-8/
+    ### https://docs.docker.com/engine/install/centos/
     dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-    dnf install docker-ce --nobest -y
-    dnf config-manager --disable docker-ce-stable
+    dnf -y install docker-ce docker-ce-cli containerd.io
     mkdir -p /etc/docker
     echo '{"bip":"192.168.180.1/22", "fixed-cidr":"192.168.180.0/22"}' > /etc/docker/daemon.json
-    wget -nv https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
+    wget -nv https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m) -O /usr/local/bin/docker-compose
     chmod 755 /usr/local/bin/docker-compose
 
     ### kubectl
