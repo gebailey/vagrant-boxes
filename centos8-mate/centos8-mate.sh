@@ -21,7 +21,7 @@ vboxmanage storagectl mate --name SATA --add sata --portcount 1
 
 vboxmanage createhd --filename "mate.vdi" --size 32768
 
-vboxmanage storageattach mate --storagectl IDE --port 1 --device 0 --type dvddrive --medium /iso/CentOS-8.3.2011-x86_64-boot.iso
+vboxmanage storageattach mate --storagectl IDE --port 1 --device 0 --type dvddrive --medium /iso/CentOS-8.5.2111-x86_64-boot.iso
 vboxmanage storageattach mate --storagectl SATA --port 0 --device 0 --type hdd --medium mate.vdi
 
 vboxmanage startvm mate
@@ -34,7 +34,7 @@ vboxmanage controlvm mate keyboardputscancode e0 48 e0 c8
 # Tab
 vboxmanage controlvm mate keyboardputscancode 0f 8f
 
-vboxmanage controlvm mate keyboardputstring " selinux=0 inst.text inst.ks=http://192.168.7.7/centos8-mate.ks"
+vboxmanage controlvm mate keyboardputstring " selinux=0 inst.selinux=0 inst.text inst.ks=http://192.168.7.7/centos8-mate.ks"
 
 # Enter
 vboxmanage controlvm mate keyboardputscancode 1c 9c

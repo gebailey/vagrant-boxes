@@ -1,11 +1,12 @@
 # CentOS 8 Developer Workstation with MATE Desktop
 
-v8.3.20210307
+v8.5.20220103
 
-CentOS 8 workstation with MATE 1.24 desktop, VirtualBox 6.1.18 guest additions,
+CentOS 8 workstation with MATE 1.26 desktop, VirtualBox 6.1.30 guest additions,
 development tools, Visual Studio Code, Google chrome, Firefox, Thunderbird,
-Docker CE, Go 1.16, Java (OpenJDK), Python 3.6, Python 3.8, Rust 1.47.0,
-MariaDB Server, kubectl, minikube, and CentOS updates as of March 7, 2021.
+Docker CE, Go 1.17.5, Java (OpenJDK), Python 3.6, Python 3.8, Python 3.9, Rust
+1.54.0, MariaDB Server, kubectl, minikube, and CentOS updates as of January 3,
+2022.
 
 ### Building the centos8-mate box
 
@@ -48,20 +49,20 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: Box Version: >= 0
 ==> default: Loading metadata for box 'gbailey/centos8-mate'
     default: URL: https://vagrantcloud.com/gbailey/centos8-mate
-==> default: Adding box 'gbailey/centos8-mate' (v8.3.20210307) for provider: virtualbox
-    default: Downloading: https://vagrantcloud.com/gbailey/boxes/centos8-mate/versions/8.3.20210307/providers/virtualbox.box
-Download redirected to host: vagrantcloud-files-production.s3.amazonaws.com
+==> default: Adding box 'gbailey/centos8-mate' (v8.5.20220103) for provider: virtualbox
+    default: Downloading: https://vagrantcloud.com/gbailey/boxes/centos8-mate/versions/8.5.20220103/providers/virtualbox.box
     default: Calculating and comparing box checksum...
-==> default: Successfully added box 'gbailey/centos8-mate' (v8.3.20210307) for 'virtualbox'!
+==> default: Successfully added box 'gbailey/centos8-mate' (v8.5.20220103) for 'virtualbox'!
 ==> default: Importing base box 'gbailey/centos8-mate'...
 ==> default: Matching MAC address for NAT networking...
-==> default: Checking if box 'gbailey/centos8-mate' version '8.3.20210307' is up to date...
-==> default: Setting the name of the VM: centos8-mate_default_1615152725462_20160
+==> default: Checking if box 'gbailey/centos8-mate' version '8.5.20220103' is up to date...
+==> default: Setting the name of the VM: centos8-mate_default_1641264849211_74562
 ==> default: Clearing any previously set network interfaces...
 ==> default: Preparing network interfaces based on configuration...
     default: Adapter 1: nat
 ==> default: Forwarding ports...
     default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
 ==> default: Booting VM...
 ==> default: Waiting for machine to boot. This may take a few minutes...
     default: SSH address: 127.0.0.1:2222
@@ -85,14 +86,14 @@ $ vagrant ssh
 Activate the web console with: systemctl enable --now cockpit.socket
 
 [vagrant@matevm ~]$ cat /etc/system-release
-CentOS Linux release 8.3.2011
+CentOS Linux release 8.5.2111
 [vagrant@matevm ~]$ uname -a
-Linux matevm 4.18.0-240.15.1.el8_3.x86_64 #1 SMP Mon Mar 1 17:16:16 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+Linux matevm 4.18.0-348.7.1.el8_5.x86_64 #1 SMP Wed Dec 22 13:25:12 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 ### Copyright
 
-Copyright (C) 2020, Greg Bailey <gbailey@lxpro.com>
+Copyright (C) 2022, Greg Bailey <gbailey@lxpro.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

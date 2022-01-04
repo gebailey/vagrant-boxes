@@ -85,17 +85,38 @@ chvt 3
     wget -nv https://docs.python.org/3.6/archives/python-3.6.8-docs-html.tar.bz2
     tar -C /var/www/html -xjf python-3.6.8-docs-html.tar.bz2
     rm -f python-3.6.8-docs-html.tar.bz2
-    chown -R root.root /var/www/html/python-3.6.8-docs-html
+    pushd /var/www/html/python-3.6.8-docs-html
+    chown -R root.root .
+    chmod -R 755 .
+    find . -type f -exec chmod 644 {} \;
+    popd
     ln -s /var/www/html/python-3.6.8-docs-html /var/www/html/python36
 
     ### Python 3.8
     dnf -y install python38 python38-devel
 
-    wget -nv https://docs.python.org/3.8/archives/python-3.8.3-docs-html.tar.bz2
-    tar -C /var/www/html -xjf python-3.8.3-docs-html.tar.bz2
-    rm -f python-3.8.3-docs-html.tar.bz2
-    chown -R root.root /var/www/html/python-3.8.3-docs-html
-    ln -s /var/www/html/python-3.8.3-docs-html /var/www/html/python38
+    wget -nv https://docs.python.org/3.8/archives/python-3.8.8-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.8.8-docs-html.tar.bz2
+    rm -f python-3.8.8-docs-html.tar.bz2
+    pushd /var/www/html/python-3.8.8-docs-html
+    chown -R root.root .
+    chmod -R 755 .
+    find . -type f -exec chmod 644 {} \;
+    popd
+    ln -s /var/www/html/python-3.8.8-docs-html /var/www/html/python38
+
+    ### Python 3.9
+    dnf -y install python39 python39-devel
+
+    wget -nv https://docs.python.org/3.9/archives/python-3.9.6-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.9.6-docs-html.tar.bz2
+    rm -f python-3.9.6-docs-html.tar.bz2
+    pushd /var/www/html/python-3.9.6-docs-html
+    chown -R root.root .
+    chmod -R 755 .
+    find . -type f -exec chmod 644 {} \;
+    popd
+    ln -s /var/www/html/python-3.9.6-docs-html /var/www/html/python39
 
     ### Django
     dnf -y install python3-django3 python3-django3-doc
@@ -107,10 +128,10 @@ chvt 3
     ### Java (OpenJDK)
     dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
 
-    ### Go 1.16
-    wget -nv https://golang.org/dl/go1.16.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
-    rm -f go1.16.linux-amd64.tar.gz
+    ### Go 1.17.5
+    wget -nv https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.17.5.linux-amd64.tar.gz
+    rm -f go1.17.5.linux-amd64.tar.gz
     echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
 
     ### Rust
@@ -122,17 +143,17 @@ chvt 3
     echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
     dnf -y install code
 
-    ### restic 0.12.0
-    wget -nv https://github.com/restic/restic/releases/download/v0.12.0/restic_0.12.0_linux_amd64.bz2
-    bunzip2 restic_0.12.0_linux_amd64.bz2
-    mv restic_0.12.0_linux_amd64 /usr/local/bin/restic
+    ### restic 0.12.1
+    wget -nv https://github.com/restic/restic/releases/download/v0.12.1/restic_0.12.1_linux_amd64.bz2
+    bunzip2 restic_0.12.1_linux_amd64.bz2
+    mv restic_0.12.1_linux_amd64 /usr/local/bin/restic
     chmod 755 /usr/local/bin/restic
 
-    ### aws-nuke 2.15.0-rc.3
-    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.15.0-rc.3/aws-nuke-v2.15.0.rc.3-linux-amd64.tar.gz
-    tar xf aws-nuke-v2.15.0.rc.3-linux-amd64.tar.gz
-    mv aws-nuke-v2.15.0.rc.3-linux-amd64 /usr/local/bin/aws-nuke
-    rm -rf aws-nuke-v2.15.0.rc.3-linux-amd64.tar.gz
+    ### aws-nuke 2.16.0
+    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.16.0/aws-nuke-v2.16.0-linux-amd64.tar.gz
+    tar xf aws-nuke-v2.16.0-linux-amd64.tar.gz
+    mv aws-nuke-v2.16.0-linux-amd64 /usr/local/bin/aws-nuke
+    rm -rf aws-nuke-v2.16.0-linux-amd64.tar.gz
     chown -R root.root /usr/local/bin/aws-nuke
 
     ### Google chrome
