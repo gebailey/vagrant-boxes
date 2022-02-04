@@ -11,8 +11,8 @@
 
 set -x
 
-# https://cdn.amazonlinux.com/os-images/2.0.20211223.0/virtualbox/amzn2-virtualbox-2.0.20211223.0-x86_64.xfs.gpt.vdi
-AMZN2_SRC="amzn2-virtualbox-2.0.20211223.0-x86_64.xfs.gpt.vdi"
+# https://cdn.amazonlinux.com/os-images/2.0.20220121.0/virtualbox/amzn2-virtualbox-2.0.20220121.0-x86_64.xfs.gpt.vdi
+AMZN2_SRC="amzn2-virtualbox-2.0.20220121.0-x86_64.xfs.gpt.vdi"
 AMZN2_RAW="$(mktemp -d -t amzn2_raw_XXXXXXXX)"
 AMZN2_MNT="$(mktemp -d -t amzn2_mnt_XXXXXXXX)"
 AMZN2_VDI="$(mktemp -d -t amzn2_vdi_XXXXXXXX)"
