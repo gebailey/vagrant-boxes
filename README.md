@@ -6,3 +6,5 @@
 
 * [CentOS 8 Developer Workstation with MATE Desktop](centos8-mate/README.md)
 
+* [CentOS Stream 8 Developer Workstation with MATE Desktop](stream8-mate/README.md)
+
