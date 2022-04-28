@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Amazon Linux 2 vagrant box construction, using an Amazon supplied VDI disk
 # image as a base.  This approach avoids actually booting the Amazon supplied
