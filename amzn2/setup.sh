@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Amazon Linux 2 vagrant box construction, using an Amazon supplied VDI disk
 # image as a base.  This script runs inside of a mounted Amazon Linux 2 VDI
