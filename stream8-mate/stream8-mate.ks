@@ -82,64 +82,91 @@ chvt 3
     ### Python 3.8
     dnf -y install python38 python38-devel
 
-    wget -nv https://docs.python.org/3.8/archives/python-3.8.8-docs-html.tar.bz2
-    tar -C /var/www/html -xjf python-3.8.8-docs-html.tar.bz2
-    rm -f python-3.8.8-docs-html.tar.bz2
-    pushd /var/www/html/python-3.8.8-docs-html
+    wget -nv https://docs.python.org/3.8/archives/python-3.8.13-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.8.13-docs-html.tar.bz2
+    rm -f python-3.8.13-docs-html.tar.bz2
+    pushd /var/www/html/python-3.8.13-docs-html
     chown -R root.root .
     chmod -R 755 .
     find . -type f -exec chmod 644 {} \;
     popd
-    ln -s /var/www/html/python-3.8.8-docs-html /var/www/html/python38
+    ln -s python-3.8.13-docs-html /var/www/html/python38
 
     ### Python 3.9
     dnf -y install python39 python39-devel
 
-    wget -nv https://docs.python.org/3.9/archives/python-3.9.6-docs-html.tar.bz2
-    tar -C /var/www/html -xjf python-3.9.6-docs-html.tar.bz2
-    rm -f python-3.9.6-docs-html.tar.bz2
-    pushd /var/www/html/python-3.9.6-docs-html
+    wget -nv https://docs.python.org/3.9/archives/python-3.9.13-docs-html.tar.bz2
+    tar -C /var/www/html -xjf python-3.9.13-docs-html.tar.bz2
+    rm -f python-3.9.13-docs-html.tar.bz2
+    pushd /var/www/html/python-3.9.13-docs-html
     chown -R root.root .
     chmod -R 755 .
     find . -type f -exec chmod 644 {} \;
     popd
-    ln -s /var/www/html/python-3.9.6-docs-html /var/www/html/python39
+    ln -s python-3.9.13-docs-html /var/www/html/python39
+
+    ### Django
+    dnf -y install python3-django3 python3-django3-doc
+    ln -s /usr/share/doc/python3-django3-doc /var/www/html/django
+
+    ### Perl
+    dnf -y module install perl:5.26
+
+    ### Java (OpenJDK)
+    dnf -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless
+
+    ### Go 1.18.3
+    wget -nv https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
+    rm -f go1.18.3.linux-amd64.tar.gz
+    echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
 
     ### Rust
     dnf -y install rust rust-doc
     ln -s /usr/share/doc/rust/html /var/www/html/rust
-
-    ### Visual Studio Code
-    rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
-    dnf -y install code
-
-    ### restic 0.12.1
-    wget -nv https://github.com/restic/restic/releases/download/v0.12.1/restic_0.12.1_linux_amd64.bz2
-    bunzip2 restic_0.12.1_linux_amd64.bz2
-    mv restic_0.12.1_linux_amd64 /usr/local/bin/restic
-    chmod 755 /usr/local/bin/restic
-
-    ### aws-nuke 2.17.0
-    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.17.0/aws-nuke-v2.17.0-linux-amd64.tar.gz
-    tar xf aws-nuke-v2.17.0-linux-amd64.tar.gz
-    mv aws-nuke-v2.17.0-linux-amd64 /usr/local/bin/aws-nuke
-    rm -rf aws-nuke-v2.17.0-linux-amd64.tar.gz
-    chown -R root.root /usr/local/bin/aws-nuke
 
     ### Google chrome
     wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
     dnf -y install ./google-chrome-stable_current_x86_64.rpm
     rm -f google-chrome-stable_current_x86_64.rpm
 
+    ### Visual Studio Code
+    rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
+    dnf -y install code
+
+    ### restic 0.13.1
+    wget -nv https://github.com/restic/restic/releases/download/v0.13.1/restic_0.13.1_linux_amd64.bz2
+    bunzip2 restic_0.13.1_linux_amd64.bz2
+    mv restic_0.13.1_linux_amd64 /usr/local/bin/restic
+    chmod 755 /usr/local/bin/restic
+
+    ### aws-nuke 2.19.0
+    wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.19.0/aws-nuke-v2.19.0-linux-amd64.tar.gz
+    tar xf aws-nuke-v2.19.0-linux-amd64.tar.gz
+    mv aws-nuke-v2.19.0-linux-amd64 /usr/local/bin/aws-nuke
+    rm -rf aws-nuke-v2.19.0-linux-amd64.tar.gz
+    chown -R root.root /usr/local/bin/aws-nuke
+
     ### Docker CE
     ### https://docs.docker.com/engine/install/centos/
     dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
     dnf -y install docker-ce docker-ce-cli containerd.io
     mkdir -p /etc/docker
-    echo '{"bip":"192.168.180.1/22", "fixed-cidr":"192.168.180.0/22"}' > /etc/docker/daemon.json
-    wget -nv https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m) -O /usr/local/bin/docker-compose
+    echo '{"bip":"192.168.184.1/22", "fixed-cidr":"192.168.184.0/22"}' > /etc/docker/daemon.json
+    wget -nv https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -O /usr/local/bin/docker-compose
     chmod 755 /usr/local/bin/docker-compose
+
+    ### kubectl
+    ### https://kubernetes.io/docs/tasks/tools/install-kubectl/
+    KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+    wget -nv https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl
+    chmod 755 /usr/local/bin/kubectl
+
+    ### minikube
+    ### https://kubernetes.io/docs/tasks/tools/install-minikube/
+    wget -nv https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -O /usr/local/bin/minikube
+    chmod 755 /usr/local/bin/minikube
 
     ### Remove unnecessary packages
     dnf -y remove '*-firmware'
@@ -159,8 +186,8 @@ chvt 3
     ### Zero out swap partition
     echo; echo "Zero fill swap partition"
     swapoff -a
-    cat /dev/zero > /dev/mapper/cl_matevm-swap
-    mkswap /dev/mapper/cl_matevm-swap
+    cat /dev/zero > /dev/mapper/cs_matevm-swap
+    mkswap /dev/mapper/cs_matevm-swap
 
     ### Zero out /boot filesystem
     echo; echo "Zero fill /boot filesystem"

@@ -1,11 +1,12 @@
 # CentOS Stream 8 Developer Workstation with MATE Desktop
 
-v8.6.20220305
+v8.6.20220711
 
-CentOS Stream 8 workstation with MATE 1.26 desktop, VirtualBox 6.1.32 guest
+CentOS Stream 8 workstation with MATE 1.26 desktop, VirtualBox 6.1.34 guest
 additions, development tools, Visual Studio Code, Google chrome, Firefox,
-Thunderbird, Docker CE, Python 3.8, Python 3.9, Rust 1.56.1, MariaDB Server,
-and CentOS updates as of March 5, 2022.
+Thunderbird, Docker CE, Go 1.18.3, Java (OpenJDK), Python 3.8, Python 3.9, Rust
+1.60.0, MariaDB Server, kubectl, minikube, and CentOS updates as of July 11,
+2022.
 
 ### Building the stream8-mate box
 
