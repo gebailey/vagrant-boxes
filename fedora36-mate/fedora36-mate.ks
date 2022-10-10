@@ -36,24 +36,31 @@ text
 shutdown
 
 %packages
--systemd-oomd-defaults
 @fedora-packager
+@java-development
 @mate-desktop
 @standard
 dejavu-fonts-all
 evince
 firefox
+gdouros-symbola-fonts
 ghostscript
+ghostscript-x11
 git-tools
 httpd
 jq
+libreoffice-calc
+libreoffice-impress
+libreoffice-writer
 mailx
 man-pages
 mariadb-server
 moby-engine
 mod_ssl
 nodejs
+perl-Digest-SHA
 ps_mem
+puzzles
 python3-docs
 python3.8
 python3.9
@@ -71,6 +78,8 @@ virtualbox-guest-additions
 whois
 xterm
 yapet
+-default-editor
+-systemd-oomd-defaults
 %end
 
 %post --erroronfail
