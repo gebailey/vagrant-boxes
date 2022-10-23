@@ -32,7 +32,7 @@ yum -y upgrade
 
 # Install the VirtualBox guest additions
 
-yum -y install gcc elfutils-libelf-devel kernel-devel
+yum -y install gcc elfutils-libelf-devel kernel-devel libX11 libXt libXext libXmu
 
 package-cleanup -y --oldkernels --count=1
 
