@@ -40,11 +40,14 @@ shutdown
 @java-development
 @mate-desktop
 @standard
+awscli2
+cargo
 dejavu-fonts-all
 evince
 f36-backgrounds-mate
 firefox
 gdouros-symbola-fonts
+gh
 ghostscript
 ghostscript-x11
 git-tools
@@ -64,11 +67,11 @@ perl-Digest-SHA
 ps_mem
 puzzles
 python3-docs
-python3.9
 python3.10
 qemu-user-binfmt
 qemu-user-static-aarch64
 rclone
+rmlint
 rust
 rust-doc
 screen
@@ -104,20 +107,20 @@ wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.
 dnf -y install ./google-chrome-stable_current_x86_64.rpm
 rm -f google-chrome-stable_current_x86_64.rpm
 
-wget -nv https://go.dev/dl/go1.20.3.linux-amd64.tar.gz
-tar -C /usr/local -xzf go1.20.3.linux-amd64.tar.gz
-rm -f go1.20.3.linux-amd64.tar.gz
+wget -nv https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
+tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+rm -f go1.21.1.linux-amd64.tar.gz
 echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/golang.sh
 
-wget -nv https://github.com/restic/restic/releases/download/v0.15.1/restic_0.15.1_linux_amd64.bz2
-bunzip2 restic_0.15.1_linux_amd64.bz2
-mv restic_0.15.1_linux_amd64 /usr/local/bin/restic
+wget -nv https://github.com/restic/restic/releases/download/v0.16.0/restic_0.16.0_linux_amd64.bz2
+bunzip2 restic_0.16.0_linux_amd64.bz2
+mv restic_0.16.0_linux_amd64 /usr/local/bin/restic
 chmod 755 /usr/local/bin/restic
 
-wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.22.1/aws-nuke-v2.22.1-linux-amd64.tar.gz
-tar xf aws-nuke-v2.22.1-linux-amd64.tar.gz
-mv aws-nuke-v2.22.1-linux-amd64 /usr/local/bin/aws-nuke
-rm -rf aws-nuke-v2.22.1-linux-amd64.tar.gz
+wget -nv https://github.com/rebuy-de/aws-nuke/releases/download/v2.25.0/aws-nuke-v2.25.0-linux-amd64.tar.gz
+tar xf aws-nuke-v2.25.0-linux-amd64.tar.gz
+mv aws-nuke-v2.25.0-linux-amd64 /usr/local/bin/aws-nuke
+rm -rf aws-nuke-v2.25.0-linux-amd64.tar.gz
 chown -R root.root /usr/local/bin/aws-nuke
 
 dnf -y remove '*-firmware'

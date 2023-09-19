@@ -19,7 +19,7 @@ vboxmanage modifyvm mate --audioout on --clipboard bidirectional --usb on --usbe
 vboxmanage storagectl mate --name IDE --add ide
 vboxmanage storagectl mate --name SATA --add sata --portcount 1
 
-vboxmanage createhd --filename "mate.vdi" --size 40960
+vboxmanage createhd --filename "mate.vdi" --size 49152
 
 vboxmanage storageattach mate --storagectl IDE --port 1 --device 0 --type dvddrive --medium /iso/Fedora-Server-netinst-x86_64-38-1.6.iso
 vboxmanage storageattach mate --storagectl SATA --port 0 --device 0 --type hdd --medium mate.vdi
