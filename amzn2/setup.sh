@@ -18,7 +18,7 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 useradd vagrant
 
 mkdir -p /home/vagrant/.ssh
-wget -nv https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub -O /home/vagrant/.ssh/authorized_keys
+wget -nv https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub -O /home/vagrant/.ssh/authorized_keys
 chmod 600 /home/vagrant/.ssh/authorized_keys
 chmod 700 /home/vagrant/.ssh
 chown -R vagrant.vagrant /home/vagrant
