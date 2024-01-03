@@ -11,6 +11,7 @@ set -x
 
 # The image doesn't have any resolvers specified
 
+rm -f /etc/resolv.conf
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Set up vagrant user
