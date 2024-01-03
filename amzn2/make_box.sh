@@ -9,7 +9,7 @@
 # Greg Bailey <gbailey@lxpro.com>
 # May 3, 2018
 
-set -x
+set -eux
 
 # https://cdn.amazonlinux.com/os-images/2.0.20231218.0/virtualbox/amzn2-virtualbox-2.0.20231218.0-x86_64.xfs.gpt.vdi
 AMZN2_SRC="amzn2-virtualbox-2.0.20231218.0-x86_64.xfs.gpt.vdi"
