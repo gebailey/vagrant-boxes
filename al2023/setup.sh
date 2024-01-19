@@ -27,6 +27,10 @@ chown -R vagrant.vagrant /home/vagrant
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 chmod 440 /etc/sudoers.d/vagrant
 
+# Install legacy network-scripts required by Vagrant
+
+yum -y install network-scripts
+
 # Install the VirtualBox guest additions
 
 yum -y install gcc elfutils-libelf-devel kernel-devel libX11 libXt libXext libXmu
