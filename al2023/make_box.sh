@@ -13,7 +13,7 @@ set -eux
 # Latest version can be retrieved using:
 # curl -I https://cdn.amazonlinux.com/al2023/os-images/latest/
 
-AL2023_VERSION="2023.3.20240312.0"
+AL2023_VERSION="2023.4.20240416.0"
 
 AL2023_OVA="al2023-vmware_esx-${AL2023_VERSION}-kernel-6.1-x86_64.xfs.gpt.ova"
 AL2023_SRC="al2023-vmware_esx-${AL2023_VERSION}-kernel-6.1-x86_64.xfs.gpt-disk1.vmdk"
@@ -27,6 +27,7 @@ if [ ! -f "${AL2023_SRC}" ]; then
 fi
 
 vboxmanage clonemedium ${AL2023_SRC} ${AL2023_RAW}/al2023.raw --format RAW
+vboxmanage closemedium ${AL2023_SRC}
 vboxmanage closemedium ${AL2023_RAW}/al2023.raw
 
 # Mount the raw image and prepare to chroot into it
