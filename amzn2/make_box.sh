@@ -18,6 +18,7 @@ AMZN2_MNT="$(mktemp -d -t amzn2_mnt_XXXXXXXX)"
 AMZN2_VDI="$(mktemp -d -t amzn2_vdi_XXXXXXXX)"
 
 vboxmanage clonemedium ${AMZN2_SRC} ${AMZN2_RAW}/amzn2.raw --format RAW
+vboxmanage closemedium ${AMZN2_SRC}
 vboxmanage closemedium ${AMZN2_RAW}/amzn2.raw
 
 # Mount the raw image and prepare to chroot into it
