@@ -1,5 +1,7 @@
 # Vagrant Boxes
 
+* [AlmaLinux 9 Developer Workstation with MATE Desktop](almalinux9-mate/README.md)
+
 * [Amazon Linux 2023](al2023/README.md)
 
 * [Amazon Linux 2](amzn2/README.md)
