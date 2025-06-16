@@ -29,17 +29,20 @@ chmod 440 /etc/sudoers.d/vagrant
 
 # Install legacy network-scripts required by Vagrant
 
-yum -y install network-scripts
+dnf -y install network-scripts
 
 # Install the VirtualBox guest additions
 
-yum -y install gcc elfutils-libelf-devel kernel-devel libX11 libXt libXext libXmu
-
-package-cleanup -y --oldkernels --count=1
+dnf -y install gcc elfutils-libelf-devel kernel-devel libX11 libXt libXext libXmu
 
 KERNEL_VERSION=$(ls /lib/modules)
 
 VIRTUALBOX_VERSION=$(wget -q http://download.virtualbox.org/virtualbox/LATEST.TXT -O -)
+
+# Downgrade all kernel components to 6.1 version to build guest additions
+# Related: https://github.com/amazonlinux/amazon-linux-2023/issues/945
+
+dnf -y downgrade "kernel-*-${KERNEL_VERSION}"
 
 wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
 mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
@@ -58,8 +61,8 @@ rm -f /root/VBoxGuestAdditions.iso
 
 # Clean up temporary files
 
-yum clean all
-rm -rf /var/cache/yum/*
+dnf clean all
+rm -rf /var/cache/dnf/*
 
 rm -f /etc/resolv.conf
 
