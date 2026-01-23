@@ -39,11 +39,6 @@ KERNEL_VERSION=$(ls /lib/modules)
 
 VIRTUALBOX_VERSION=$(wget -q http://download.virtualbox.org/virtualbox/LATEST.TXT -O -)
 
-# Downgrade all kernel components to 6.1 version to build guest additions
-# Related: https://github.com/amazonlinux/amazon-linux-2023/issues/945
-
-dnf -y downgrade "kernel-*-${KERNEL_VERSION}"
-
 wget -nv https://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso -O /root/VBoxGuestAdditions.iso
 mount -o ro,loop /root/VBoxGuestAdditions.iso /mnt
 sh /mnt/VBoxLinuxAdditions.run
