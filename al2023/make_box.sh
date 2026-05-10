@@ -13,7 +13,7 @@ set -eux
 # Latest version can be retrieved using:
 # curl -I https://cdn.amazonlinux.com/al2023/os-images/latest/
 
-AL2023_VERSION="2023.10.20260302.1"
+AL2023_VERSION="2023.11.20260509.0"
 
 AL2023_OVA="al2023-vmware_esx-${AL2023_VERSION}-kernel-6.1-x86_64.xfs.gpt.ova"
 AL2023_SRC="al2023-vmware_esx-${AL2023_VERSION}-kernel-6.1-x86_64.xfs.gpt-disk1.vmdk"
